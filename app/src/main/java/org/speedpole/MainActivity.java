@@ -18,6 +18,8 @@ import com.airbnb.lottie.LottieComposition;
 import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.dd.CircularProgressButton;
 
+import org.speedpole.activity.AppsActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -116,6 +118,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }*/
+        if(id == R.id.nav_apps)
+        {
+            AppsActivity.startAppsActivity(this);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
