@@ -1,6 +1,7 @@
 package org.speedpole;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,12 +21,15 @@ import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.dd.CircularProgressButton;
 
 import org.speedpole.activity.AppsActivity;
+import org.speedpole.mode.SelectApp;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.circularButton)
@@ -32,10 +37,15 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.lav_show)
     public LottieAnimationView mLottieAnimationView;
 
+    private SelectApp mSelectApp;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int getContentView() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initData() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,7 +58,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        ButterKnife.bind(this);
 
         LottieComposition.Factory.fromAssetFileName(this, "lottiefiles.com - Mail Sent.json",
                 new OnCompositionLoadedListener() {
@@ -65,6 +74,13 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        mSelectApp = (SelectApp) loadParcelable(SelectApp.class.getSimpleName(),SelectApp.class);
+        if(mSelectApp == null)
+        {
+            mSelectApp = new SelectApp(true,new ArrayList<String>());
+            Log.e("debug","debug:"+mSelectApp.isSelectAll);
+        }
     }
 
     @Override
@@ -120,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         }*/
         if(id == R.id.nav_apps)
         {
-            AppsActivity.startAppsActivity(this);
+            AppsActivity.startAppsActivity(this, mSelectApp, AppsActivity.AppsRequestCode);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -152,5 +168,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
         widthAnimation.start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == AppsActivity.AppsRequestCode)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                mSelectApp = data.getParcelableExtra(AppsActivity.Extra_SelectApp_Key);
+                Log.e("onActivityResult","onActivityResult:"+mSelectApp.isSelectAll);
+            }
+        }
     }
 }
