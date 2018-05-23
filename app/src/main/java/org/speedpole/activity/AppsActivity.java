@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -72,6 +73,8 @@ public class AppsActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        getSupportActionBar().setElevation(0f);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mSelectApp = getIntent().getParcelableExtra(Extra_SelectApp_Key);
         if(mSelectApp != null)
         {
@@ -90,10 +93,11 @@ public class AppsActivity extends BaseActivity {
 
         mRecyclerViewAdapter = new RecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
+                new LinearLayoutManager(this).getOrientation()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         asyncLoading();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

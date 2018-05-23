@@ -20,7 +20,9 @@ import com.airbnb.lottie.LottieComposition;
 import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.dd.CircularProgressButton;
 
+import org.speedpole.activity.AboutActivity;
 import org.speedpole.activity.AppsActivity;
+import org.speedpole.activity.NodeActivity;
 import org.speedpole.mode.SelectApp;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class MainActivity extends BaseActivity
     public LottieAnimationView mLottieAnimationView;
 
     private SelectApp mSelectApp;
+    private Menu mMenu;
 
     @Override
     public int getContentView() {
@@ -97,6 +100,7 @@ public class MainActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        mMenu = menu;
         return true;
     }
 
@@ -109,6 +113,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivityForResult(new Intent(this, NodeActivity.class),12);
             return true;
         }
 
@@ -137,6 +142,10 @@ public class MainActivity extends BaseActivity
         if(id == R.id.nav_apps)
         {
             AppsActivity.startAppsActivity(this, mSelectApp, AppsActivity.AppsRequestCode);
+        }
+        if(id == R.id.nav_about)
+        {
+            startActivity(new Intent(this, AboutActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -180,6 +189,10 @@ public class MainActivity extends BaseActivity
                 mSelectApp = data.getParcelableExtra(AppsActivity.Extra_SelectApp_Key);
                 Log.e("onActivityResult","onActivityResult:"+mSelectApp.isSelectAll);
             }
+        }
+        if(requestCode == 12)
+        {
+            mMenu.findItem(R.id.action_settings).setIcon(R.mipmap.server_icon_ae);
         }
     }
 }
