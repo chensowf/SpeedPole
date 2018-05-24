@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import org.speedpole.BaseActivity;
 import org.speedpole.R;
+import org.w3c.dom.Node;
 
 import butterknife.BindView;
 
@@ -62,6 +63,8 @@ public class NodeActivity extends BaseActivity {
             nodeIcon = itemView.findViewById(R.id.node_icon);
             stateName = itemView.findViewById(R.id.node_name);
             this.itemView = itemView;
+            itemView.setOnClickListener(new ItemClickListener());
+            itemView.setTag(this);
         }
     }
 
@@ -89,7 +92,13 @@ public class NodeActivity extends BaseActivity {
             {
                 viewHolder.nodeIcon.setImageResource(R.drawable.ic_fly_black_24dp);
                 viewHolder.stateName.setText("Auto Select");
-                viewHolder.itemView.setBackgroundColor(getResources().getColor(R.color.purple_50));
+                viewHolder.itemView.setBackgroundColor(getResources().getColor(R.color.purple_40));
+            }
+            else
+            {
+                viewHolder.nodeIcon.setImageResource(R.mipmap.server_icon_ca);
+                viewHolder.stateName.setText("加拿大");
+                viewHolder.itemView.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         }
 
@@ -98,5 +107,15 @@ public class NodeActivity extends BaseActivity {
             return 20;
         }
     }
+
+    public class ItemClickListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+            NodeViewHolder viewHolder = (NodeViewHolder) v.getTag();
+            
+        }
+    }
+
 
 }
