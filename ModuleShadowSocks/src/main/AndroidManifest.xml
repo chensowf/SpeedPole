@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.txket.ss" >
+
+
+    <application>
+        <service
+            android:name="com.txket.ss.core.LocalVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            >
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ModuleProgressLibrary" />
+            <option value="$PROJECT_DIR$/ModuleShadowSocks" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

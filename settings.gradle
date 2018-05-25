@@ -1,1 +1,1 @@
-include ':app','ModuleProgressLibrary'
+include ':app', 'ModuleProgressLibrary', ':ModuleShadowSocks'

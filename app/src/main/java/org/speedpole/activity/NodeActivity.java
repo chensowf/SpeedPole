@@ -113,7 +113,7 @@ public class NodeActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             NodeViewHolder viewHolder = (NodeViewHolder) v.getTag();
-            
+            finish();
         }
     }
 

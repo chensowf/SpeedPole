@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ModuleProgressLibrary/ModuleProgressLibrary.iml" filepath="$PROJECT_DIR$/ModuleProgressLibrary/ModuleProgressLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleShadowSocks/ModuleShadowSocks.iml" filepath="$PROJECT_DIR$/ModuleShadowSocks/ModuleShadowSocks.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpeedPole.iml" filepath="$PROJECT_DIR$/SpeedPole.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
