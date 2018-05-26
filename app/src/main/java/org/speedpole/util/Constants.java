@@ -7,4 +7,6 @@ package org.speedpole.util;
 public class Constants {
 
     public final static String Select_App_Cache_Name = "Select_App_Cache_Name";
+
+    public final static String BaseUrl = "http://api.kukucloude.com:8090/index_admin.php/admin/b/";
 }

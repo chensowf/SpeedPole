@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +19,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.speedpole.BaseActivity;
+import org.speedpole.BuildConfig;
 import org.speedpole.R;
+import org.speedpole.util.Constants;
+import org.speedpole.util.Encryptor;
+import org.speedpole.util.OkHttpUtil;
+import org.speedpole.util.Util;
 import org.w3c.dom.Node;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import butterknife.BindView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 public class NodeActivity extends BaseActivity {
 
@@ -44,12 +57,43 @@ public class NodeActivity extends BaseActivity {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 new LinearLayoutManager(this).getOrientation()));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        getNodeInfo();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getNodeInfo()
+    {
+        String url = Constants.BaseUrl+"getvpn";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", "chen");
+        params.put("password", "123456");
+        params.put("lang", "zh");
+        if(BuildConfig.DEBUG)
+            Log.e("url",url);
+        OkHttpUtil.request(url, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                byte[] buffer = Encryptor.decrypt(Encryptor.key,
+                        Encryptor.iv,
+                        response.body().bytes(),
+                        Encryptor.NoPadding);
+                /*buffer = Util.uncompress(buffer);*/
+                String json = new String(buffer);
+                if(BuildConfig.DEBUG)
+                    Log.e("json",json);
+            }
+        });
     }
 
     public class NodeViewHolder extends RecyclerView.ViewHolder
@@ -116,6 +160,5 @@ public class NodeActivity extends BaseActivity {
             finish();
         }
     }
-
 
 }
