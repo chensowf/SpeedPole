@@ -420,7 +420,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         builder.setConfigureIntent(pendingIntent);*/
 
-        builder.setSession(ProxyConfig.Instance.getSessionName());    //可以认为设置虚拟网卡的名字
+        builder.setSession("VPN");    //可以认为设置虚拟网卡的名字
         ParcelFileDescriptor pfdDescriptor = builder.establish();    //开启虚拟网卡，返回一个文件描述符，用于网卡数据读写操作
         onStatusChanged("connected", true);
         return pfdDescriptor;
